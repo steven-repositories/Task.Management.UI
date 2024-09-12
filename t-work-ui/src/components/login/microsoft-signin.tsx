@@ -1,6 +1,5 @@
 "use client";
 
-import React from "react";
 import { Button, Image } from "@nextui-org/react";
 import MicrosoftIcon from "../../assets/icons/microsoft-icon.svg";
 import { useMsal, UnauthenticatedTemplate, AuthenticatedTemplate } from "@azure/msal-react";
@@ -23,7 +22,7 @@ const MicrosoftSignInButton = () => {
 
         if (Boolean(activeAccount)) {
             instance.logoutPopup({
-                postLogoutRedirectUri: "/"
+                account: activeAccount
             })
             .then((result) => console.log(result))
             .catch((error) => console.log(error));

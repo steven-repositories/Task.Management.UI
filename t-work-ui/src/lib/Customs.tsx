@@ -25,6 +25,7 @@ type LabelProps = {
     size?: string
     weight?: "inherit" | "lighter"| "normal" | "bold" | "bolder",
     color?: "black" | "white" | "grey",
+    font?: string,
     showPointer?: boolean
 } & IStyles;
 
@@ -49,12 +50,13 @@ export const Stack = forwardRef(({ children, className, fullWidth, style, justif
     );
 });
 
-export const Label = ({ children, toolTip, isFor, size, weight, color, showPointer, style }: LabelProps) => {
+export const Label = ({ children, toolTip, isFor, size, weight, color, showPointer, font, style }: LabelProps) => {
     return (
         <label 
             htmlFor={isFor}
             style={{
                 cursor: (showPointer ? "pointer" : "none"),
+                font: font,
                 fontSize: (size ?? "20px"),
                 fontWeight: (weight ?? "initial"),
                 color: color,

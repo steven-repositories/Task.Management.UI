@@ -6,9 +6,8 @@ import GoogleIcon from "../../assets/icons/google-icon.svg";
 
 const GoogleSignInButton = () => {
     const googleSignIn = useGoogleLogin({
-        onSuccess: (result) => {
-            console.log(result);
-        }
+        onSuccess: (result) => console.log(result),
+        onError: (error) => console.error(error)
     });
 
     return (

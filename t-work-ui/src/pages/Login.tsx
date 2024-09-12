@@ -126,7 +126,7 @@ const Login = () => {
                                         direction="column" 
                                         fullWidth
                                     >
-                                        <Label size="15px" color="grey">
+                                        <Label size="13px" color="grey">
                                             ———— Or continue with ————
                                         </Label>
 
