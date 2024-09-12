@@ -1,4 +1,6 @@
-import React from "react";
+"use client";
+
+import React, { forwardRef } from "react";
 
 interface IStyles {
     style?: React.CSSProperties,
@@ -13,7 +15,6 @@ type StackProps = {
     children?: React.ReactNode,
     className?: string,
     fullWidth?: boolean,
-    ref?: React.LegacyRef<HTMLDivElement>
     tabIndex?: string
 } & IStyles;
 
@@ -27,10 +28,9 @@ type LabelProps = {
     showPointer?: boolean
 } & IStyles;
 
-export const Stack = ({ children, className, fullWidth, style, justify, direction, display, align, gap, ref, tabIndex }: StackProps) => {
+export const Stack = forwardRef(({ children, className, fullWidth, style, justify, direction, display, align, gap, tabIndex }: StackProps, ref) => {
     return (
         <div
-            ref={ref}
             className={className} 
             tabIndex={(tabIndex ? +tabIndex : 0)}
             style={{
@@ -47,7 +47,7 @@ export const Stack = ({ children, className, fullWidth, style, justify, directio
             {children}
         </div>
     );
-};
+});
 
 export const Label = ({ children, toolTip, isFor, size, weight, color, showPointer, style }: LabelProps) => {
     return (

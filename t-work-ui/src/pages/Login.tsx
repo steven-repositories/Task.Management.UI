@@ -1,15 +1,24 @@
-import React from "react";
-import { Stack, Label } from "../lib/Customs";
+"use client";
+
+import { Stack, Label } from "../lib/customs";
 import { Card, CardHeader, CardBody, CardFooter, Image, Input, Button } from "@nextui-org/react";
 import { useForm, Controller } from "react-hook-form";
-import GoogleIcon from "../assets/icons/google-icon.svg";
 import MicrosoftIcon from "../assets/icons/microsoft-icon.svg";
 import LinkedInIcon from "../assets/icons/linkedin-icon.svg";
 import SlackIcon from "../assets/icons/slack-icon.svg";
+import axios from "axios";
+
+import GoogleSignInButton from "../components/login/google-signin";
+import MicrosoftSignInButton from "../components/login/microsoft-signin";
 
 const Login = () => {
     return (
-        <section className="py-6" style={{ width: "100%" }}>
+        <section 
+            className="py-6" 
+            style={{ 
+                width: "100%"
+            }}
+        >
             <Stack
                 direction="row"
                 fullWidth
@@ -118,7 +127,7 @@ const Login = () => {
                                         fullWidth
                                     >
                                         <Label size="15px" color="grey">
-                                            ———— Or sign up with ————
+                                            ———— Or continue with ————
                                         </Label>
 
                                         <Stack 
@@ -132,23 +141,18 @@ const Login = () => {
                                                 fullWidth
                                             >
                                                 <Stack fullWidth>
-                                                    <Button
-                                                        style={{ 
-                                                            width: "100%",
-                                                            gap: "0.4rem"
-                                                        }}
-                                                        startContent={
-                                                            <Image
-                                                                width={15}
-                                                                alt="Google Logo"
-                                                                src={GoogleIcon}
-                                                            />
-                                                        }
-                                                    >
-                                                        Google
-                                                    </Button>
+                                                    <GoogleSignInButton />
                                                 </Stack>
 
+                                                <Stack fullWidth>
+                                                    <MicrosoftSignInButton />
+                                                </Stack>
+                                            </Stack>
+
+                                            <Stack 
+                                                justify="space-evenly" 
+                                                fullWidth
+                                            >
                                                 <Stack fullWidth>
                                                     <Button
                                                         style={{ 
@@ -164,29 +168,6 @@ const Login = () => {
                                                         }
                                                     >
                                                         LinkedIn
-                                                    </Button>
-                                                </Stack>
-                                            </Stack>
-
-                                            <Stack 
-                                                justify="space-evenly" 
-                                                fullWidth
-                                            >
-                                                <Stack fullWidth>
-                                                    <Button
-                                                        style={{ 
-                                                            width: "100%",
-                                                            gap: "0.3rem"
-                                                        }}
-                                                        startContent={
-                                                            <Image
-                                                                width={15}
-                                                                alt="Microsoft Logo"
-                                                                src={MicrosoftIcon}
-                                                            />
-                                                        }
-                                                    >
-                                                        Microsoft
                                                     </Button>
                                                 </Stack>
 

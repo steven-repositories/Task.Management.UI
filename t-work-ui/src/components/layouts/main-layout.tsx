@@ -1,8 +1,10 @@
+"use client";
+
 import React, { useRef } from "react";
-import TaskWorkProvider from "./TaskWorkProvider";
+import TaskWorkProvider from "../providers/task-work-provider";
 import { Routes, Route, useNavigate } from "react-router-dom";
 import { Link } from "@nextui-org/react";
-import { Stack, Label } from "../../lib/Customs";
+import { Stack, Label } from "../../lib/customs";
 
 type MainLayoutProps = {
     children?: React.ReactNode

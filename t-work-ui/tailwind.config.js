@@ -33,7 +33,7 @@ export default {
               DEFAULT: "#DD62ED",
               foreground: "#ffffff",
             },
-            focus: "#F182F6",
+            focus: "#a3aac4",
           },
           layout: {
             disabledOpacity: "0.3",
