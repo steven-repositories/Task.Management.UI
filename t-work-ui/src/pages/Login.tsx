@@ -1,22 +1,32 @@
 "use client";
 
-import { Stack, Label } from "../lib/customs";
-import { Card, CardHeader, CardBody, CardFooter, Image, Input, Button } from "@nextui-org/react";
-import { useForm, Controller } from "react-hook-form";
-import MicrosoftIcon from "../assets/icons/microsoft-icon.svg";
+import { Stack, Label } from "../components/common/customs";
+import { Card, CardHeader, CardBody, Image, Input, Button } from "@nextui-org/react";
+// import { useForm, Controller } from "react-hook-form";
 import LinkedInIcon from "../assets/icons/linkedin-icon.svg";
 import SlackIcon from "../assets/icons/slack-icon.svg";
-import axios from "axios";
 
 import GoogleSignInButton from "../components/login/google-signin";
 import MicrosoftSignInButton from "../components/login/microsoft-signin";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
+    const navigate = useNavigate();
+    const [isSignedIn, setIsSignedIn] = useState(false);
+
+    useEffect(() => {
+        if (Boolean(isSignedIn)) {
+            navigate("/");
+        }
+    }, [isSignedIn])
+
     return (
         <section 
             className="py-6" 
             style={{ 
-                width: "100%"
+                width: "100%",
+                height: "100vh"
             }}
         >
             <Stack
@@ -103,7 +113,7 @@ const Login = () => {
                                         </Stack>
 
                                         <Stack fullWidth>
-                                            <Label color="grey" size="10.5px">
+                                            <Label color="grey" size="10px">
                                                 I agree to the TaskWork Customer Agreement, 
                                                 which incorporates by reference the AI Product-Specific Terms, 
                                                 and acknowledge the Privacy Policy.</Label>
@@ -141,7 +151,7 @@ const Login = () => {
                                                 fullWidth
                                             >
                                                 <Stack fullWidth>
-                                                    <GoogleSignInButton />
+                                                    <GoogleSignInButton setIsSignedIn={setIsSignedIn} />
                                                 </Stack>
 
                                                 <Stack fullWidth>
@@ -192,22 +202,7 @@ const Login = () => {
                                         </Stack>
                                     </Stack>
                                 </Stack>
-
-
-                                {/* <div className="grid grid-cols-6 md:grid-cols-12 gap-6 md:gap-4 items-center justify-center">
-                                    <div className="relative col-span-6 md:col-span-4">
-                                        <Image
-                                            alt="Album cover"
-                                            className="object-cover"
-                                            height={200}
-                                            shadow="md"
-                                            src="https://nextui.org/images/album-cover.png"
-                                            width="100%"
-                                        />
-                                    </div>
-                                </div> */}
                             </CardBody>
-                            
                         </Card>
                     </Stack>
                 </Stack>

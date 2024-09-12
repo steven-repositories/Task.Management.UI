@@ -4,7 +4,7 @@ import react from '@vitejs/plugin-react'
 export default defineConfig(() => {
   process.env = {
     ...process.env,
-    ...loadEnv("dev", process.cwd())
+    ...loadEnv("*", process.cwd())
   };
 
   return {

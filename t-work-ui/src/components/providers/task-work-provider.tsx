@@ -13,6 +13,11 @@ type TaskWorkProviderProps = {
 };
 
 const TaskWorkProvider = ({ children, navigate }: TaskWorkProviderProps) => {
+    const googleClientId: string = (process.env.VITE_TASKWORK_GOOGLE_CLIENT_ID!)
+        .replace(";", "");  
+
+    console.log(googleClientId.replace(";", ""));
+
     return (
         <NextUIProvider navigate={navigate}>
             <NextTehemesProvider
