@@ -13,10 +13,7 @@ type TaskWorkProviderProps = {
 };
 
 const TaskWorkProvider = ({ children, navigate }: TaskWorkProviderProps) => {
-    const googleClientId: string = (process.env.VITE_TASKWORK_GOOGLE_CLIENT_ID!)
-        .replace(";", "");  
-
-    console.log(googleClientId.replace(";", ""));
+    const googleClientId: string = (process.env.VITE_TASKWORK_GOOGLE_CLIENT_ID!);
 
     return (
         <NextUIProvider navigate={navigate}>
@@ -25,7 +22,7 @@ const TaskWorkProvider = ({ children, navigate }: TaskWorkProviderProps) => {
                 defaultTheme="light"
                 themes={["light", "dark", "modern", "grey"]}
             >
-                <GoogleOAuthProvider clientId="853842984038-rip7hnq5324glrpdiltqecdic0quf432.apps.googleusercontent.com">
+                <GoogleOAuthProvider clientId={googleClientId}>
                     <MicrosoftOAuthProvider>
                         {children}
                     </MicrosoftOAuthProvider>

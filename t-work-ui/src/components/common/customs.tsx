@@ -29,7 +29,7 @@ type LabelProps = {
     showPointer?: boolean
 } & IStyles;
 
-export const Stack = forwardRef(({ children, className, fullWidth, style, justify, direction, display, align, gap, tabIndex }: StackProps, ref) => {
+export const Stack = forwardRef(({ children, className, fullWidth, style, justify, direction, display, align, gap, tabIndex }: StackProps) => {
     return (
         <div
             className={className} 

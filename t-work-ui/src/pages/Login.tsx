@@ -17,6 +17,7 @@ const Login = () => {
 
     useEffect(() => {
         if (Boolean(isSignedIn)) {
+            console.log(111111);
             navigate("/");
         }
     }, [isSignedIn])

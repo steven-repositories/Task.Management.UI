@@ -1,9 +1,12 @@
-import React from "react";
+"use client";
+
 import { Stack, Label } from "../components/common/customs";
 
 const Dashboard = () => {
     return (
-        <Label>Hello, Dashboard!</Label>
+        <Stack>
+            <Label>Hello, Dashboard!</Label>
+        </Stack>
     );
 };
 

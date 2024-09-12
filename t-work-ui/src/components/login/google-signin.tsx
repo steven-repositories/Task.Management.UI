@@ -5,7 +5,7 @@ import { useGoogleLogin } from "@react-oauth/google";
 import GoogleIcon from "../../assets/icons/google-icon.svg";
 import { GetGoogleUserInfo } from "../../integration/data-manager";
 import { Keys } from "../../hooks/keys/query-keys";
-import React, { Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction } from "react";
 
 type GoogleSignInButtonProps = {
     setIsSignedIn: Dispatch<SetStateAction<boolean>>
