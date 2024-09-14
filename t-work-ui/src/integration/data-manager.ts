@@ -1,5 +1,5 @@
 import axios, { AxiosHeaders, HttpStatusCode } from "axios";
-import { StorageKeys } from "../hooks/keys/storage-keys";
+import { StorageKeys } from "../keys/storage-keys";
 
 type GetApiEndpointProps = {
     brand: string,

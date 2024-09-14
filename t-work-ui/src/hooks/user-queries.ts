@@ -1,6 +1,6 @@
 import { useQuery, useQueryClient, useMutation } from "@tanstack/react-query";
-import { QueryKeys } from "./keys/query-keys";
-import { StorageKeys } from "./keys/storage-keys";
+import { QueryKeys } from "../keys/query-keys";
+import { StorageKeys } from "../keys/storage-keys";
 import { JsonConvert } from "json2typescript";
 import { GoogleUserInfo } from "../entities/google-user-info";
 import { useMsal } from "@azure/msal-react";

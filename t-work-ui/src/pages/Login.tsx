@@ -9,7 +9,7 @@ import GoogleSignInButton from "../components/login/google-signin";
 import MicrosoftSignInButton from "../components/login/microsoft-signin";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { StorageKeys } from "../hooks/keys/storage-keys";
+import { StorageKeys } from "../keys/storage-keys";
 
 const Login = () => {
     const navigate = useNavigate();
