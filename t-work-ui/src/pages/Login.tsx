@@ -5,22 +5,25 @@ import { Card, CardHeader, CardBody, Image, Input, Button } from "@nextui-org/re
 // import { useForm, Controller } from "react-hook-form";
 import LinkedInIcon from "../assets/icons/linkedin-icon.svg";
 import SlackIcon from "../assets/icons/slack-icon.svg";
-
 import GoogleSignInButton from "../components/login/google-signin";
 import MicrosoftSignInButton from "../components/login/microsoft-signin";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { StorageKeys } from "../hooks/keys/storage-keys";
 
 const Login = () => {
     const navigate = useNavigate();
-    const [isSignedIn, setIsSignedIn] = useState(false);
 
     useEffect(() => {
-        if (Boolean(isSignedIn)) {
-            console.log(111111);
-            navigate("/");
+        // if have value then 
+        // user has been signed in
+        // -> navigate to dashboard
+        const userIdentity = sessionStorage.getItem(StorageKeys.USER_IDENTITY);
+
+        if (Boolean(userIdentity)) {
+            navigate("/dashboard");
         }
-    }, [isSignedIn])
+    }, []);
 
     return (
         <section 
@@ -152,7 +155,7 @@ const Login = () => {
                                                 fullWidth
                                             >
                                                 <Stack fullWidth>
-                                                    <GoogleSignInButton setIsSignedIn={setIsSignedIn} />
+                                                    <GoogleSignInButton />
                                                 </Stack>
 
                                                 <Stack fullWidth>

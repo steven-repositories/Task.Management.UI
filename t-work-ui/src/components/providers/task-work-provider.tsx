@@ -3,30 +3,37 @@
 import React from "react";
 import { NextUIProvider } from "@nextui-org/react";
 import { ThemeProvider as NextTehemesProvider } from "next-themes";
-import { NavigateFunction } from "react-router-dom";
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import { MicrosoftOAuthProvider } from "./microsoft-oauth-provider";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+
+type ClientRecordNames = "google-client" | "query-client";
 
 type TaskWorkProviderProps = {
     children: React.ReactNode,
-    navigate: NavigateFunction
+    clientRecords: Record<ClientRecordNames, object>
 };
 
-const TaskWorkProvider = ({ children, navigate }: TaskWorkProviderProps) => {
-    const googleClientId: string = (process.env.VITE_TASKWORK_GOOGLE_CLIENT_ID!);
+const TaskWorkProvider = ({ children, clientRecords }: TaskWorkProviderProps) => {
+    const googleRecord = Object.entries(clientRecords["google-client"]);
+    const googleClientId: string = googleRecord.at(0)?.[1]!;
+
+    const queryClient = new QueryClient(clientRecords["query-client"]);
 
     return (
-        <NextUIProvider navigate={navigate}>
+        <NextUIProvider>
             <NextTehemesProvider
                 attribute="class"
                 defaultTheme="light"
                 themes={["light", "dark", "modern", "grey"]}
             >
-                <GoogleOAuthProvider clientId={googleClientId}>
-                    <MicrosoftOAuthProvider>
-                        {children}
-                    </MicrosoftOAuthProvider>
-                </GoogleOAuthProvider>
+                <QueryClientProvider client={queryClient}>
+                    <GoogleOAuthProvider clientId={googleClientId}>
+                        <MicrosoftOAuthProvider>
+                            {children}
+                        </MicrosoftOAuthProvider>
+                    </GoogleOAuthProvider>
+                </QueryClientProvider>
             </NextTehemesProvider>
         </NextUIProvider>
     );

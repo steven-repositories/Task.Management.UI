@@ -1,5 +1,5 @@
 import axios, { AxiosHeaders, HttpStatusCode } from "axios";
-import { Keys } from "../hooks/keys/query-keys";
+import { StorageKeys } from "../hooks/keys/storage-keys";
 
 type GetApiEndpointProps = {
     brand: string,
@@ -37,7 +37,7 @@ export const GetGoogleUserInfo = async () => {
             endpoint: "oauth2/v3/userinfo"
         } as GetApiEndpointProps;
     
-        const token = sessionStorage.getItem(Keys.OAUTH_TOKEN)!;
+        const token = sessionStorage.getItem(StorageKeys.USER_TOKEN)!;
     
         if (!Boolean(token)) {
             throw new Error("Authorization token is required.");
@@ -56,6 +56,6 @@ export const GetGoogleUserInfo = async () => {
     
         return result.data;
     } catch (error) {
-        console.log(error);
+        console.error(error);
     }
 };

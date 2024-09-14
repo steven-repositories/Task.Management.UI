@@ -1,21 +1,41 @@
 "use client";
 
-import React, { useRef } from "react";
-import TaskWorkProvider from "../providers/task-work-provider";
-import { useNavigate } from "react-router-dom";
+import React, { useEffect, useRef } from "react";
+import { NavigateFunction, useLocation, useSearchParams } from "react-router-dom";
 import { Link } from "@nextui-org/react";
 import { Stack, Label } from "../common/customs";
+import { useMsal } from "@azure/msal-react";
+import { useSetupMicrosoftUser } from "../../hooks/user-queries";
 
 type MainLayoutProps = {
-    children?: React.ReactNode
+    children?: React.ReactNode,
+    navigate: NavigateFunction
 };
 
-const MainLayout = ({ children }: MainLayoutProps) => {
+const MainLayout = ({ children, navigate }: MainLayoutProps) => {
+    const location = useLocation();
+    const [searchParams, setSearchParams] = useSearchParams(location.search);
+    const { instance, accounts } = useMsal();
     const mainContentRef = useRef(null);
-    const navigate = useNavigate();
+
+    const setupMicrosoftUser = useSetupMicrosoftUser();
+
+    useEffect(() => {
+        const microsoftOAuthorized = searchParams.has("moa", "true");
+        
+        if (microsoftOAuthorized) {
+            const microsoftUser = instance.getActiveAccount();
+            setupMicrosoftUser(microsoftUser!);
+
+            setTimeout(() => {
+                searchParams.delete("moa");
+                navigate("/dashboard");
+            }, 500);
+        }
+    }, [Boolean(accounts.length)]);
 
     return (
-        <TaskWorkProvider navigate={navigate}>
+        <>
             <header className="py-3">
                 {/* IF NOT SIGNED IN */}
                 {/* <Stack 
@@ -70,7 +90,7 @@ const MainLayout = ({ children }: MainLayoutProps) => {
             </main>
             
             <footer></footer>
-        </TaskWorkProvider>
+        </>
     );
 };
 
