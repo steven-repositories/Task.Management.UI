@@ -8,7 +8,7 @@ import { useMicrosoftLogin } from "../../hooks/user-queries";
 const MicrosoftSignInButton = () => {
     const { instance } = useMsal();
 
-    const microsoftSignIn = useMicrosoftLogin({
+    const { mutate: microsoftSignIn } = useMicrosoftLogin({
         onSuccess: (result: unknown) => {
             console.log(result);
         },
@@ -23,9 +23,7 @@ const MicrosoftSignInButton = () => {
         if (Boolean(activeAccount)) {
             instance.logoutPopup({
                 account: activeAccount
-            })
-            .then((result) => console.log(result))
-            .catch((error) => console.log(error));
+            });
         }
     };
 

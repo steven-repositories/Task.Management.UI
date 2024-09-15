@@ -55,7 +55,7 @@ export const Label = ({ children, toolTip, isFor, size, weight, color, showPoint
         <label 
             htmlFor={isFor}
             style={{
-                cursor: (showPointer ? "pointer" : "none"),
+                cursor: (showPointer ? "pointer" : "initial"),
                 font: font,
                 fontSize: (size ?? "20px"),
                 fontWeight: (weight ?? "initial"),
@@ -63,7 +63,11 @@ export const Label = ({ children, toolTip, isFor, size, weight, color, showPoint
                 ...style
             }}
         >
-            <Stack align="center" direction="row" gap="1rem">
+            <Stack 
+                align="center" 
+                direction="row" 
+                gap="1rem"
+            >
                 {children}
                 {toolTip}
             </Stack>

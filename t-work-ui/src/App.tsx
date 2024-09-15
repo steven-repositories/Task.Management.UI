@@ -2,7 +2,7 @@
 
 import MainLayout from "./components/layouts/main-layout";
 import { Routes, Route, useNavigate } from "react-router-dom";
-import Login from "./pages/login";
+import Main from "./pages/main";
 
 const App = () => {
   const navigate = useNavigate();
@@ -10,7 +10,7 @@ const App = () => {
   return (
       <MainLayout navigate={navigate}>
         <Routes>
-          <Route path="/" element={<Login />} />
+          <Route path="/" element={<Main />} />
         </Routes>
       </MainLayout>
   );

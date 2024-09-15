@@ -2,12 +2,13 @@ import { useQuery, useQueryClient, useMutation } from "@tanstack/react-query";
 import { QueryKeys } from "../keys/query-keys";
 import { StorageKeys } from "../keys/storage-keys";
 import { JsonConvert } from "json2typescript";
-import { GoogleUserInfo } from "../entities/google-user-info";
+import { GoogleUserInfo } from "../models/google-user-info";
 import { useMsal } from "@azure/msal-react";
-import { loginRequest } from "../auth/microsoft-auth-config";
+import { loginRequest } from "../configurations/microsoft-auth-config";
 import { AccountInfo } from "@azure/msal-browser";
 import { GetGoogleUserInfo } from "../integration/data-manager";
-import { MicrosoftUserInfo } from "../entities/microsoft-user-info";
+import { MicrosoftUserInfo } from "../models/microsoft-user-info";
+import { User } from "../models/user-info";
 
 type QueryProps = {
     onSuccess?: (result: unknown) => void,
@@ -15,85 +16,30 @@ type QueryProps = {
 };
 
 export const useUser = () => {
-    const { data } = useQuery({
+    return useQuery({
         queryKey: [QueryKeys.GOOGLE_USER, QueryKeys.MICROSOFT_USER, QueryKeys.LINKEDIN_USER, QueryKeys.SLACK_USER, QueryKeys.TASKWORK_USER],
         queryFn: () => {
-            const userIdentity = sessionStorage.getItem(StorageKeys.USER_IDENTITY);
-            const sessionedUser = sessionStorage.getItem(StorageKeys.USER_PROFILE);
+            const sessionUser = sessionStorage.getItem(StorageKeys.USER_PROFILE);
+            
+            if (!Boolean(sessionUser)) {
+                return null;
+            }
 
-            const jsonConvert = new JsonConvert();
-
-            switch (userIdentity) {
-                case QueryKeys.GOOGLE_USER:
-                    const googleUser = jsonConvert.deserialize(JSON.parse(sessionedUser!), GoogleUserInfo);
-                    return googleUser as GoogleUserInfo;
-                case QueryKeys.MICROSOFT_USER:
-                    const microsoftUser = jsonConvert.deserialize(JSON.parse(sessionedUser!), MicrosoftUserInfo);
-                    return microsoftUser as MicrosoftUserInfo;
-                case QueryKeys.LINKEDIN_USER:
-                    return;
-                case QueryKeys.SLACK_USER:
-                    return;
-                case QueryKeys.TASKWORK_USER:
-                    return;
-                default:
-                    return;
-            };
+            return User.from(sessionUser!);
         }
     });
-
-    return data;
 };
-
-// export const useGoogleUser = () => {
-//     const { data } = useQuery({
-//         queryKey: [QueryKeys.GOOGLE_USER],
-//         queryFn: () => {
-//             const sessionedUser = sessionStorage.getItem(StorageKeys.USER_PROFILE);
-
-//             if (!Boolean(sessionedUser)) {
-//                 return null;
-//             }
-
-//             const jsonConvert = new JsonConvert();
-//             const googleUser = jsonConvert.deserialize(JSON.parse(sessionedUser!), GoogleUserInfo);
-
-//             return googleUser;
-//         }
-//     });
-
-//     return data as GoogleUserInfo;
-// };
-
-// export const useMicrosoftUser = () => {
-//     const { data } = useQuery({
-//         queryKey: [QueryKeys.MICROSOFT_USER],
-//         queryFn: () => {
-//             const sessionedUser = sessionStorage.getItem(StorageKeys.USER_PROFILE);
-
-//             if (!Boolean(sessionedUser)) {
-//                 return null;
-//             }
-
-//             const jsonConvert = new JsonConvert();
-//             const microsoftUser = jsonConvert.deserialize(JSON.parse(sessionedUser!), MicrosoftUserInfo);
-
-//             return microsoftUser;
-//         }
-//     });
-
-//     return data as MicrosoftUserInfo;
-// };
 
 export const useSetupGoogleUser = () => {
     const queryClient = useQueryClient();
 
-    const { mutate } = useMutation({
+    return useMutation({
         mutationFn: async (token: string) => {
+            sessionStorage.setItem(StorageKeys.USER_TOKEN, token);
+
             const user = await GetGoogleUserInfo();
             
             sessionStorage.setItem(StorageKeys.USER_IDENTITY, QueryKeys.GOOGLE_USER);
-            sessionStorage.setItem(StorageKeys.USER_TOKEN, token);
             sessionStorage.setItem(StorageKeys.USER_PROFILE, JSON.stringify(user));
         },
         onSuccess: () => {
@@ -105,14 +51,12 @@ export const useSetupGoogleUser = () => {
             console.error(error);
         }
     });
-
-    return mutate;
 };
 
 export const useSetupMicrosoftUser = () => {
     const queryClient = useQueryClient();
     
-    const { mutate } = useMutation({
+    return useMutation({
         mutationFn: async (data: AccountInfo) => {
             const jsonConvert = new JsonConvert();
 
@@ -137,15 +81,13 @@ export const useSetupMicrosoftUser = () => {
             console.error(error);
         }
     });
-
-    return mutate;
 };
 
 export const useMicrosoftLogin = ({ onSuccess, onError }: QueryProps) => {
     const queryClient = useQueryClient();
     const { instance } = useMsal();
 
-    const { mutate } = useMutation({
+    return useMutation({
         mutationFn: async () => {
             await instance.loginRedirect({
                 ...loginRequest,
@@ -172,8 +114,6 @@ export const useMicrosoftLogin = ({ onSuccess, onError }: QueryProps) => {
             }
         }
     });
-    
-    return mutate;
 };
 
 export const useLogout = () => {

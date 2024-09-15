@@ -5,7 +5,7 @@ import { createRoot } from 'react-dom/client'
 import App from './app.tsx'
 import './index.css'
 import { BrowserRouter } from 'react-router-dom'
-import { QueryClientConfiguration } from './configurations/default-query-client.ts';
+import { QueryClientConfiguration } from './configurations/query-client-config.ts';
 import TaskWorkProvider from './components/providers/task-work-provider.tsx';
 
 const googleClientId: string = process.env.VITE_TASKWORK_GOOGLE_CLIENT_ID!;

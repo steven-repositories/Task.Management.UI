@@ -2,7 +2,7 @@
 
 import React from "react";
 import { PublicClientApplication, EventType, AuthenticationResult } from '@azure/msal-browser';
-import { msalConfig } from '../../auth/microsoft-auth-config';
+import { msalConfig } from '../../configurations/microsoft-auth-config';
 import { MsalProvider } from "@azure/msal-react";
 
 type MicrosoftOauthProviderProps = {

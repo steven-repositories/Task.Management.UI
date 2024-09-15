@@ -8,13 +8,20 @@ import { useSetupGoogleUser } from "../../hooks/user-queries";
 
 const GoogleSignInButton = () => {
     const navigate = useNavigate();
-    const setupGoogleUser = useSetupGoogleUser();
+    
+    const {
+         mutate: setupGoogleUser, 
+         isPending: isSetupGoogleUserPending
+    } = useSetupGoogleUser();
 
     const googleSignIn = useGoogleLogin({
         prompt: "select_account",
         onSuccess: (result) => {
             setupGoogleUser(result.access_token);
-            navigate("/dashboard");
+
+            if (!isSetupGoogleUserPending) {
+                navigate("/dashboard");
+            }
         },
         onError: (error) => {
             console.error(error);
